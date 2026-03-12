@@ -1,2 +1,2 @@
 # algoritmos-js
-Exercícios e algoritmos em JavaScript praticados durante minha jornada de estudos para desenvolvimento web.
+Exercícios e algoritmos em JavaScript praticados durante minha jornada de estudos.
