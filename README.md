@@ -1,15 +1,33 @@
 # Algoritmos em JavaScript
 
-Este repositório contém exercícios e algoritmos em JavaScript praticados durante minha jornada de aprendizado em programação.
+Este repositório contém exercícios e algoritmos que estou desenvolvendo durante minha jornada de estudos em JavaScript com foco em me tornar um desenvolvedor Full Stack.
 
-## Algoritmos implementados
+## 📚 Conteúdo
 
-- Maior número de um array
-- Menor número de um array
-- Soma de elementos de um array
-- Contagem de elementos
-- Verificação de anagramas
+Atualmente o repositório possui os seguintes algoritmos:
 
-## Objetivo
+- Encontrar o **maior número** de um array
+- Encontrar o **menor número** de um array
+- **Contagem de números repetidos**
+- **Verificação de anagramas**
 
-Praticar lógica de programação e manipulação de dados usando JavaScript.
+## 🚀 Tecnologias
+
+- JavaScript
+- Node.js (execução local)
+- Git
+- GitHub
+
+## 🎯 Objetivo
+
+Praticar lógica de programação e estruturas fundamentais do JavaScript como:
+
+- Arrays
+- Objetos
+- Loops
+- Condições
+- Funções
+
+## 📈 Próximos passos
+
+Adicionar novos algoritmos e desafios de lógica conforme avanço nos estudos.
