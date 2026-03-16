@@ -1,13 +1,22 @@
+const numeros = [4, 9, 2, 15, 2];
+
 function menorNumero(lista) {
+  if (lista.length === 0) {
+    return null;
+  }
+
   let menor = lista[0];
 
   for (let i = 1; i < lista.length; i++) {
-    if (lista[i] < menor) {
-      menor = lista[i];
+    const numero = lista[i];
+
+    if (numero < menor) {
+      menor = numero;
     }
   }
 
   return menor;
 }
 
-console.log(menorNumero([5, 10, 2, 8]));
+const resultado = menorNumero(numeros);
+console.log("O menor número é:", resultado);
