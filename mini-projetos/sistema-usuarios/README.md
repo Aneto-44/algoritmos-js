@@ -2,15 +2,16 @@
 
 Projeto simples para praticar manipulação de arrays e objetos em JavaScript.
 
-## Funcionalidades
+## Funcionalidades implementadas
 
-- Listar nomes dos usuários
-- Filtrar usuários maiores de idade
-- Filtrar usuários menores de idade
-- Buscar usuário pelo nome
-- Contar total de usuários
-- Calcular média de idade
-- Encontrar usuário mais velho
+- Listagem de nomes
+- Filtro de usuários por idade
+- Busca por nome
+- Contagem de usuários
+- Cálculo de média de idade
+- Identificação do usuário mais velho
+- Identificação do usuário mais novo
+- Ordenação por idade
 
 ## Tecnologias
 
