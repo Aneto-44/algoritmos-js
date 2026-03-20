@@ -14,12 +14,12 @@ function mostrarUsuarios(listaUsuarios) {
     const li = document.createElement("li");
 
     li.innerHTML = `
-  ${listaUsuarios[i].nome} - ${listaUsuarios[i].idade} anos
-  <button onclick="removerUsuario(${i})">Remover</button>
-  <button onclick="editarUsuario(${i})">Editar</button>
+  <span>${listaUsuarios[i].nome} - ${listaUsuarios[i].idade} anos</span>
+  <div class="acoes">
+    <button onclick="removerUsuario(${i})">Remover</button>
+    <button onclick="editarUsuario(${i})">Editar</button>
+  </div>
   `;
-
-    lista.appendChild(li);
   }
 }
 
