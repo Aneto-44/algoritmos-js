@@ -25,6 +25,14 @@ function contarUsuarios(lista) {
   return lista.length;
 }
 
+function ordenarPorIdade(lista) {
+  return [...lista].sort((a, b) => a.idade - b.idade);
+}
+
+function nomesOrdenadosPorIdade(lista) {
+  return ordenarPorIdade(lista).map((usuario) => usuario.nome);
+}
+
 function usuarioMaisVelho(lista) {
   let maisVelho = lista[0];
 
@@ -61,14 +69,6 @@ function buscarUsuario(lista, nomeBusca) {
   }
 
   return undefined;
-}
-
-function ordenarPorIdade(lista) {
-  return [...lista].sort((a, b) => a.idade - b.idade);
-}
-
-function nomesOrdenadosPorIdade(lista) {
-  return ordenarPorIdade(lista).map((usuario) => usuario.nome);
 }
 
 function usuarioMaisNovo(lista) {

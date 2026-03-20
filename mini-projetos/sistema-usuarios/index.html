@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Usuários</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Lista de Usuários</h1>
+
+    <input type="text" id="busca" placeholder="Buscar usuário..." />
+    <button onclick="filtrar()">Buscar</button>
+    <button onclick="ordenar()">Ordenar por idade</button>
+    <button onclick="mostrarMaisVelho()">Mais velho</button>
+    <button onclick="mostrarMaisNovo()">Mais novo</button>
+
+    <h2>Adicionar usuário</h2>
+
+    <input type="text" id="nome" placeholder="Nome" />
+    <input type="number" id="idade" placeholder="Idade" />
+    <button onclick="adicionarUsuario()">Adicionar</button>
+
+    <ul id="lista"></ul>
+
+    <script src="script.js"></script>
+  </body>
+</html>
