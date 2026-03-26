@@ -1,39 +1,111 @@
-let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [
-  { nome: "Ana", idade: 19 },
-  { nome: "Carlos", idade: 25 },
-  { nome: "João", idade: 17 },
-  { nome: "Marina", idade: 30 },
-];
+let usuarios = [];
 
 const lista = document.getElementById("lista");
 
-function mostrarUsuarios(listaUsuarios) {
+let editandoId = null;
+
+async function carregarUsuarios() {
+  const resposta = await fetch("http://localhost:3000/usuarios");
+  const dados = await resposta.json();
+
+  usuarios = dados;
+  mostrarUsuarios();
+}
+
+function mostrarUsuarios(listaUsuarios = usuarios) {
   lista.innerHTML = "";
 
   for (let i = 0; i < listaUsuarios.length; i++) {
+    const usuario = listaUsuarios[i];
+
     const li = document.createElement("li");
 
-    li.innerHTML = `
-  <span>${listaUsuarios[i].nome} - ${listaUsuarios[i].idade} anos</span>
-  <div class="acoes">
-    <button onclick="removerUsuario(${i})">Remover</button>
-    <button onclick="editarUsuario(${i})">Editar</button>
-  </div>
-  `;
+    const span = document.createElement("span");
+    span.textContent = `${usuario.nome} - ${usuario.idade} anos`;
+
+    const botaoRemover = document.createElement("button");
+    botaoRemover.textContent = "Remover";
+
+    botaoRemover.onclick = async function () {
+      const confirmar = confirm("Tem certeza que deseja remover este usuário?");
+
+      if (!confirmar) return;
+
+      await fetch(`http://localhost:3000/usuarios/${usuario.id}`, {
+        method: "DELETE",
+      });
+
+      carregarUsuarios();
+    };
+
+    const botaoEditar = document.createElement("button");
+    botaoEditar.textContent = "Editar";
+    botaoEditar.onclick = function () {
+      editarUsuario(usuario.id);
+    };
+
+    const divAcoes = document.createElement("div");
+    divAcoes.className = "acoes";
+
+    divAcoes.appendChild(botaoEditar);
+    divAcoes.appendChild(botaoRemover);
+
+    li.appendChild(span);
+    li.appendChild(divAcoes);
+
+    lista.appendChild(li);
   }
 }
 
-function removerUsuario(index) {
-  usuarios.splice(index, 1);
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  mostrarUsuarios(usuarios);
+function editarUsuario(id) {
+  const usuario = usuarios.find((u) => u.id === id);
+
+  document.getElementById("nome").value = usuario.nome;
+  document.getElementById("idade").value = usuario.idade;
+
+  editandoId = id;
+}
+
+async function adicionarUsuario() {
+  const nome = document.getElementById("nome").value;
+  const idade = Number(document.getElementById("idade").value);
+
+  if (!nome || !idade) {
+    alert("Preencha corretamente");
+    return;
+  }
+
+  if (editandoId !== null) {
+    await fetch(`http://localhost:3000/usuarios/${editandoId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, idade }),
+    });
+
+    editandoId = null;
+  } else {
+    await fetch("http://localhost:3000/usuarios", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, idade }),
+    });
+  }
+
+  carregarUsuarios();
+
+  document.getElementById("nome").value = "";
+  document.getElementById("idade").value = "";
 }
 
 function filtrar() {
   const valor = document.getElementById("busca").value.toLowerCase();
 
-  const filtrados = usuarios.filter((usuario) =>
-    usuario.nome.toLowerCase().includes(valor),
+  const filtrados = usuarios.filter((u) =>
+    u.nome.toLowerCase().includes(valor),
   );
 
   mostrarUsuarios(filtrados);
@@ -45,55 +117,32 @@ function ordenar() {
 }
 
 function mostrarMaisVelho() {
-  const maisVelho = usuarios.reduce((maior, atual) => {
-    return atual.idade > maior.idade ? atual : maior;
-  });
+  if (usuarios.length === 0) return;
+
+  const maisVelho = usuarios.reduce((maior, atual) =>
+    atual.idade > maior.idade ? atual : maior,
+  );
 
   mostrarUsuarios([maisVelho]);
 }
 
 function mostrarMaisNovo() {
-  const maisNovo = usuarios.reduce((menor, atual) => {
-    return atual.idade < menor.idade ? atual : menor;
-  });
+  if (usuarios.length === 0) return;
+
+  const maisNovo = usuarios.reduce((menor, atual) =>
+    atual.idade < menor.idade ? atual : menor,
+  );
 
   mostrarUsuarios([maisNovo]);
 }
 
-function adicionarUsuario() {
-  const nome = document.getElementById("nome").value;
-  const idade = Number(document.getElementById("idade").value);
-
-  if (!nome || !idade) {
-    alert("Preencha corretamente");
-    return;
-  }
-
-  if (indexEditando !== null) {
-    usuarios[indexEditando] = { nome, idade };
-    indexEditando = null;
-  } else {
-    usuarios.push({ nome, idade });
-  }
-
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-  mostrarUsuarios(usuarios);
-
-  document.getElementById("nome").value = "";
-  document.getElementById("idade").value = "";
+function lerUsuarios() {
+  const dados = fs.readFileSync("usuarios.json");
+  return JSON.parse(dados);
 }
 
-let indexEditando = null;
-
-function editarUsuario(index) {
-  const usuario = usuarios[index];
-
-  document.getElementById("nome").value = usuario.nome;
-  document.getElementById("idade").value = usuario.idade;
-
-  indexEditando = index;
+function salvarUsuarios(dados) {
+  fs.writeFileSync("usuarios.json", JSON.stringify(dados, null, 2));
 }
 
-// mostra todos ao carregar
-mostrarUsuarios(usuarios);
+carregarUsuarios();

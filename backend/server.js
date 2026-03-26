@@ -7,14 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 FUNÇÕES
 function lerUsuarios() {
-  const dados = fs.readFileSync("usuarios.json");
+  const dados = fs.readFileSync("backend/usuarios.json");
   return JSON.parse(dados);
 }
 
 function salvarUsuarios(dados) {
-  fs.writeFileSync("usuarios.json", JSON.stringify(dados, null, 2));
+  fs.writeFileSync("backend/usuarios.json", JSON.stringify(dados, null, 2));
 }
 
 // 🔽 ROTAS
